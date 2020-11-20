@@ -1,0 +1,9 @@
+.appContainer {
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
+}
+
+.movieHeaderText {
+  padding: 0px 20px;
+}

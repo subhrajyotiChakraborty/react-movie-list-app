@@ -1,25 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+import MainPage from "./screens/MainPage";
+import * as classes from "./App.module.css";
+import * as actions from "./store/actions";
+import MovieContext from "./context/movie";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchWord: "",
+    };
+  }
+
+  componentDidMount() {
+    this.props.fetchMovies();
+  }
+
+  handleSearch = (searchKeyword) => {
+    this.setState({
+      searchWord: searchKeyword,
+    });
+    if (searchKeyword && searchKeyword.trim().length) {
+      this.props.fetchMovies(searchKeyword.trim());
+    }
+  };
+
+  handleResetList = () => {
+    this.props.fetchMovies();
+  };
+
+  render() {
+    return (
+      <div className={classes.appContainer}>
+        <MovieContext.Provider
+          value={{
+            searchValue: this.state.searchWord,
+            handleSearch: this.handleSearch,
+            handleResetList: this.handleResetList,
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <MainPage />
+        </MovieContext.Provider>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    movies: state.movies.movies,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchMovies: (searchKeyword) =>
+      dispatch(actions.fetchMovies(searchKeyword)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
