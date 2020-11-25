@@ -42,7 +42,7 @@ class App extends Component {
             handleResetList: this.handleResetList,
           }}
         >
-          <MainPage />
+          <MainPage movies={this.props.movies} />
         </MovieContext.Provider>
       </div>
     );

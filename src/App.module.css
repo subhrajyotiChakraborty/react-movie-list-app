@@ -7,3 +7,14 @@
 .movieHeaderText {
   padding: 0px 20px;
 }
+
+.hrStyle {
+  margin: 0px 20px;
+}
+
+.movieListContainer {
+  display: flex;
+  width: auto;
+  overflow-x: scroll;
+  margin: 20px;
+}
