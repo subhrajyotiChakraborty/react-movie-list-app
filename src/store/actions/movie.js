@@ -6,7 +6,6 @@ export const fetchMovies = (searchWord = "Jurassic") => {
     try {
       dispatch(fetchMoviesStart());
       const response = await axios.get(searchWord);
-      console.log(response.data);
 
       const { Response } = response.data;
       if (Response === "False") {

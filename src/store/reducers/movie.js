@@ -1,3 +1,4 @@
+import { showToast } from "../../common/utils";
 import * as actionTypes from "../actionTypes";
 
 const INITIAL_STATE = {
@@ -37,17 +38,19 @@ const reducer = (state = INITIAL_STATE, action) => {
       const isExists = state.favMovies.findIndex(
         (movie) => movie.imdbID === action.payload.imdbID
       );
-      console.log(isExists);
       if (isExists === -1) {
         window.localStorage.setItem(
           "movies",
           JSON.stringify([...state.favMovies, action.payload])
         );
+        showToast(true, "Movie added successfully to your Favorite list");
         return {
           ...state,
           favMovies: [...state.favMovies, action.payload],
         };
       }
+
+      showToast(false, "Movie already present to your Favorite list");
       return state;
 
     case actionTypes.REMOVE_FAV_MOVIE:
@@ -59,6 +62,7 @@ const reducer = (state = INITIAL_STATE, action) => {
           "movies",
           JSON.stringify(updatedFavMovieList)
         );
+        showToast(true, "Movie removed successfully to your Favorite list");
         return {
           ...state,
           favMovies: updatedFavMovieList,

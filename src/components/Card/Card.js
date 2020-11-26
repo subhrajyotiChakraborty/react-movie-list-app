@@ -22,6 +22,9 @@ const Card = ({
         icon={isFav ? faHeart : farHeartO}
         color="red"
         size="2x"
+        title={
+          isFav ? "Remove from your favorite list" : "Add to your favorite list"
+        }
         onClick={() => {
           if (isFav) {
             removeFromFav();

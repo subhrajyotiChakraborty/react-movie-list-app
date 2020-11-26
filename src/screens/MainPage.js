@@ -5,7 +5,6 @@ import Card from "../components/Card/Card";
 import * as classes from "../App.module.css";
 
 const MainPage = ({ movies, favHandler, favMovies, removeFavMovieHandler }) => {
-  console.log(movies);
   return (
     <React.Fragment>
       <Header />

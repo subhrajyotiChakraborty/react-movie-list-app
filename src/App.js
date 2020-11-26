@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 import MainPage from "./screens/MainPage";
 import * as classes from "./App.module.css";
@@ -35,6 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className={classes.appContainer}>
+        <ToastContainer />
         <MovieContext.Provider
           value={{
             searchValue: this.state.searchWord,
