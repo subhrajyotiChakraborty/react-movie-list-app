@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   error: false,
   movies: [],
   message: "",
+  favMovies: JSON.parse(window.localStorage.getItem("movies")),
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -31,6 +32,39 @@ const reducer = (state = INITIAL_STATE, action) => {
         msg: "",
         movies: action.payload,
       };
+
+    case actionTypes.SAVE_FAV_MOVIE:
+      const isExists = state.favMovies.findIndex(
+        (movie) => movie.imdbID === action.payload.imdbID
+      );
+      console.log(isExists);
+      if (isExists === -1) {
+        window.localStorage.setItem(
+          "movies",
+          JSON.stringify([...state.favMovies, action.payload])
+        );
+        return {
+          ...state,
+          favMovies: [...state.favMovies, action.payload],
+        };
+      }
+      return state;
+
+    case actionTypes.REMOVE_FAV_MOVIE:
+      const updatedFavMovieList = state.favMovies.filter(
+        (movie) => movie.imdbID !== action.payload
+      );
+      if (updatedFavMovieList) {
+        window.localStorage.setItem(
+          "movies",
+          JSON.stringify(updatedFavMovieList)
+        );
+        return {
+          ...state,
+          favMovies: updatedFavMovieList,
+        };
+      }
+      return state;
 
     default:
       return state;

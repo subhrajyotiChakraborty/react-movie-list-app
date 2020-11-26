@@ -42,7 +42,12 @@ class App extends Component {
             handleResetList: this.handleResetList,
           }}
         >
-          <MainPage movies={this.props.movies} />
+          <MainPage
+            movies={this.props.movies}
+            favHandler={this.props.favHandler}
+            favMovies={this.props.favMovies}
+            removeFavMovieHandler={this.props.removeFavMovieHandler}
+          />
         </MovieContext.Provider>
       </div>
     );
@@ -52,6 +57,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     movies: state.movies.movies,
+    favMovies: state.movies.favMovies,
   };
 };
 
@@ -59,6 +65,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchMovies: (searchKeyword) =>
       dispatch(actions.fetchMovies(searchKeyword)),
+    favHandler: (movie) => dispatch(actions.saveFavMovie(movie)),
+    removeFavMovieHandler: (imdbID) => dispatch(actions.removeFavMovie(imdbID)),
   };
 };
 

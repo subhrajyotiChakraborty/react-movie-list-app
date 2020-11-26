@@ -41,3 +41,17 @@ export const fetchMoviesError = (errorMessage = "Some error occurred") => {
     payload: errorMessage,
   };
 };
+
+export const saveFavMovie = (movie) => {
+  return {
+    type: actionTypes.SAVE_FAV_MOVIE,
+    payload: movie,
+  };
+};
+
+export const removeFavMovie = (imdbID) => {
+  return {
+    type: actionTypes.REMOVE_FAV_MOVIE,
+    payload: imdbID,
+  };
+};
