@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   error: false,
   movies: [],
   message: "",
-  favMovies: JSON.parse(window.localStorage.getItem("movies")),
+  favMovies: JSON.parse(window.localStorage.getItem("movies")) || [],
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -35,10 +35,12 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
 
     case actionTypes.SAVE_FAV_MOVIE:
-      const isExists = state.favMovies.findIndex(
-        (movie) => movie.imdbID === action.payload.imdbID
-      );
-      if (isExists === -1) {
+      const isExists =
+        state.favMovies &&
+        state.favMovies.findIndex(
+          (movie) => movie.imdbID === action.payload.imdbID
+        );
+      if (isExists === -1 || isExists === null) {
         window.localStorage.setItem(
           "movies",
           JSON.stringify([...state.favMovies, action.payload])
