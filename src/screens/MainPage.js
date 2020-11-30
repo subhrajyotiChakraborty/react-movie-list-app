@@ -26,7 +26,6 @@ const MainPage = ({ movies, favHandler, favMovies, removeFavMovieHandler }) => {
                         imdbID,
                         Type,
                         Year,
-                        isFav: true,
                       })
                     }
                   />

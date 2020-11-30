@@ -1,12 +1,11 @@
-import { showToast } from "../../common/utils";
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   loading: false,
   error: false,
   movies: [],
   message: "",
-  favMovies: JSON.parse(window.localStorage.getItem("movies")) || [],
+  favMovies: [],
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -34,42 +33,34 @@ const reducer = (state = INITIAL_STATE, action) => {
         movies: action.payload,
       };
 
-    case actionTypes.SAVE_FAV_MOVIE:
-      const isExists =
-        state.favMovies &&
-        state.favMovies.findIndex(
-          (movie) => movie.imdbID === action.payload.imdbID
-        );
-      if (isExists === -1 || isExists === null) {
-        window.localStorage.setItem(
-          "movies",
-          JSON.stringify([...state.favMovies, action.payload])
-        );
-        showToast(true, "Movie added successfully to your Favorite list");
-        return {
-          ...state,
-          favMovies: [...state.favMovies, action.payload],
-        };
-      }
+    case actionTypes.SAVE_FAV_MOVIE_LIST:
+      return {
+        ...state,
+        favMovies: [...state.favMovies, ...action.payload],
+      };
 
-      showToast(false, "Movie already present to your Favorite list");
+    case actionTypes.SAVE_FAV_MOVIE_SUCCESS:
+      return {
+        ...state,
+        favMovies: [...state.favMovies, action.payload],
+      };
+
+    case actionTypes.SAVE_FAV_MOVIE_ERROR:
       return state;
 
-    case actionTypes.REMOVE_FAV_MOVIE:
+    case actionTypes.REMOVE_FAV_MOVIE_SUCCESS:
       const updatedFavMovieList = state.favMovies.filter(
         (movie) => movie.imdbID !== action.payload
       );
       if (updatedFavMovieList) {
-        window.localStorage.setItem(
-          "movies",
-          JSON.stringify(updatedFavMovieList)
-        );
-        showToast(true, "Movie removed successfully to your Favorite list");
         return {
           ...state,
           favMovies: updatedFavMovieList,
         };
       }
+      return state;
+
+    case actionTypes.REMOVE_FAV_MOVIE_ERROR:
       return state;
 
     default:

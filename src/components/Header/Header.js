@@ -9,7 +9,7 @@ const Header = () => {
       {({ searchValue, handleSearch, handleResetList }) => (
         <header className={classes.header}>
           <h2 onClick={handleResetList} className={classes.headerAppName}>
-            App Name
+            FavMovies
           </h2>
           <input
             placeholder="Search Movies"

@@ -18,6 +18,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchMovies();
+    this.props.fetchFavMovies();
   }
 
   handleSearch = (searchKeyword) => {
@@ -67,6 +68,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchMovies: (searchKeyword) =>
       dispatch(actions.fetchMovies(searchKeyword)),
+    fetchFavMovies: () => dispatch(actions.fetchFavMovieList()),
     favHandler: (movie) => dispatch(actions.saveFavMovie(movie)),
     removeFavMovieHandler: (imdbID) => dispatch(actions.removeFavMovie(imdbID)),
   };

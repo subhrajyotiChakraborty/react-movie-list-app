@@ -1,1 +1,6 @@
-export { fetchMovies, saveFavMovie, removeFavMovie } from "./movie";
+export {
+  fetchMovies,
+  saveFavMovie,
+  removeFavMovie,
+  fetchFavMovieList,
+} from "./movie";
