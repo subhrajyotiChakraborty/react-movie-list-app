@@ -63,6 +63,7 @@ export const saveFavMovieList = (movies) => {
 export const saveFavMovie = (movie) => {
   return async (dispatch) => {
     try {
+      dispatch(saveFavMovieStart());
       const response = await axios.post("movie", movie);
       showToast(true, "Movie successfully added to your favorite list");
       dispatch(saveFavMovieSuccess(response.data));
@@ -71,6 +72,12 @@ export const saveFavMovie = (movie) => {
       showToast(false, "Movie already present to your favorite list");
       dispatch(saveFavMovieError());
     }
+  };
+};
+
+export const saveFavMovieStart = () => {
+  return {
+    type: actionTypes.SAVE_FAV_MOVIE_START,
   };
 };
 
@@ -90,6 +97,7 @@ export const saveFavMovieError = () => {
 export const removeFavMovie = (imdbID) => {
   return async (dispatch) => {
     try {
+      dispatch(removeFavMovieStart());
       const response = await axios.delete(`movie/${imdbID}`);
       // console.log(response.data);
       showToast(true, response.data.message);
@@ -98,6 +106,12 @@ export const removeFavMovie = (imdbID) => {
       console.log(error);
       dispatch(removeFavMovieError());
     }
+  };
+};
+
+export const removeFavMovieStart = () => {
+  return {
+    type: actionTypes.REMOVE_FAV_MOVIE_START,
   };
 };
 

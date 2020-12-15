@@ -11,6 +11,8 @@ const INITIAL_STATE = {
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.FETCH_MOVIES_START:
+    case actionTypes.SAVE_FAV_MOVIE_START:
+    case actionTypes.REMOVE_FAV_MOVIE_START:
       return {
         ...state,
         loading: true,
@@ -42,11 +44,16 @@ const reducer = (state = INITIAL_STATE, action) => {
     case actionTypes.SAVE_FAV_MOVIE_SUCCESS:
       return {
         ...state,
+        loading: false,
         favMovies: [...state.favMovies, action.payload],
       };
 
     case actionTypes.SAVE_FAV_MOVIE_ERROR:
-      return state;
+    case actionTypes.REMOVE_FAV_MOVIE_ERROR:
+      return {
+        ...state,
+        loading: false,
+      };
 
     case actionTypes.REMOVE_FAV_MOVIE_SUCCESS:
       const updatedFavMovieList = state.favMovies.filter(
@@ -55,13 +62,14 @@ const reducer = (state = INITIAL_STATE, action) => {
       if (updatedFavMovieList) {
         return {
           ...state,
+          loading: false,
           favMovies: updatedFavMovieList,
         };
       }
-      return state;
-
-    case actionTypes.REMOVE_FAV_MOVIE_ERROR:
-      return state;
+      return {
+        ...state,
+        loading: false,
+      };
 
     default:
       return state;

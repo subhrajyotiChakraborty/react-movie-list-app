@@ -1,11 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import TopBarProgress from "react-topbar-progress-indicator";
 
 import MainPage from "./screens/MainPage";
 import * as classes from "./App.module.css";
 import * as actions from "./store/actions";
 import MovieContext from "./context/movie";
+
+TopBarProgress.config({
+  barColors: {
+    0: "#4cd964",
+    0.5: "#26a52a",
+    "1.0": "#026d05",
+  },
+  shadowBlur: 5,
+});
 
 class App extends Component {
   constructor(props) {
@@ -38,6 +48,7 @@ class App extends Component {
     return (
       <div className={classes.appContainer}>
         <ToastContainer />
+        {this.props.loading && <TopBarProgress />}
         <MovieContext.Provider
           value={{
             searchValue: this.state.searchWord,
@@ -61,6 +72,7 @@ const mapStateToProps = (state) => {
   return {
     movies: state.movies.movies,
     favMovies: state.movies.favMovies,
+    loading: state.movies.loading,
   };
 };
 
