@@ -3,4 +3,5 @@ export {
   saveFavMovie,
   removeFavMovie,
   fetchFavMovieList,
+  loadMoreMovies,
 } from "./movie";

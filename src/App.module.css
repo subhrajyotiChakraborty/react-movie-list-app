@@ -20,3 +20,14 @@
   margin-bottom: 0;
   padding-bottom: 20px;
 }
+
+.loadMoreIcon {
+  align-self: center;
+  cursor: pointer;
+  color: #25b9ca;
+  transition: transform 0.2s;
+}
+
+.loadMoreIcon:hover {
+  transform: scale(1.1);
+}

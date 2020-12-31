@@ -1,10 +1,19 @@
 import React, { Fragment } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "../components/Header/Header";
 import Card from "../components/Card/Card";
 import * as classes from "../App.module.css";
 
-const MainPage = ({ movies, favHandler, favMovies, removeFavMovieHandler }) => {
+const MainPage = ({
+  movies,
+  favHandler,
+  favMovies,
+  removeFavMovieHandler,
+  pageCountHandler,
+  showLoadMore,
+}) => {
   return (
     <React.Fragment>
       <Header />
@@ -32,6 +41,16 @@ const MainPage = ({ movies, favHandler, favMovies, removeFavMovieHandler }) => {
                 </Fragment>
               );
             })}
+            {showLoadMore ? (
+              <FontAwesomeIcon
+                className={classes.loadMoreIcon}
+                icon={faArrowRight}
+                title="Load More"
+                size="5x"
+                color="blue"
+                onClick={pageCountHandler}
+              />
+            ) : null}
           </div>
           {favMovies && favMovies.length ? (
             <>

@@ -2,21 +2,44 @@ import * as actionTypes from "./actionTypes";
 import axios from "../../axios";
 import { showToast } from "../../common/utils";
 
-export const fetchMovies = (searchWord = "Jurassic") => {
+export const fetchMovies = (searchWord = "Jurassic", pageCount = 1) => {
   return async (dispatch) => {
     try {
       dispatch(fetchMoviesStart());
-      const response = await axios.get(`movies/${searchWord}`);
+      const response = await axios.get(
+        `movies/${searchWord}?page=${pageCount}`
+      );
 
       const { Response } = response.data;
       if (Response === "False") {
         dispatch(fetchMoviesError(response.data.Error));
       } else {
-        dispatch(fetchMoviesSuccess(response.data.Search));
+        dispatch(fetchMoviesSuccess(response.data));
       }
     } catch (error) {
       console.log(error);
       dispatch(fetchMoviesError());
+    }
+  };
+};
+
+export const loadMoreMovies = (searchWord = "Jurassic", pageCount = 1) => {
+  return async (dispatch) => {
+    try {
+      dispatch(fetchMoviesStart());
+      const response = await axios.get(
+        `movies/${searchWord}?page=${pageCount}`
+      );
+
+      const { Response } = response.data;
+      if (Response === "False") {
+        dispatch(loadMoreMoviesError(response.data.Error));
+      } else {
+        dispatch(loadMoreMoviesSuccess(response.data));
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(loadMoreMoviesError());
     }
   };
 };
@@ -28,9 +51,25 @@ export const fetchMoviesStart = () => {
 };
 
 export const fetchMoviesSuccess = (data) => {
+  if (data.Search.length !== Number(data.totalResults)) {
+    data["loadMore"] = true;
+  }
   return {
     type: actionTypes.FETCH_MOVIES_SUCCESS,
     payload: data,
+  };
+};
+
+export const loadMoreMoviesSuccess = (data) => {
+  return {
+    type: actionTypes.LOAD_MORE_MOVIES_SUCCESS,
+    payload: data,
+  };
+};
+
+export const loadMoreMoviesError = () => {
+  return {
+    type: actionTypes.LOAD_MORE_MOVIES_FAIL,
   };
 };
 

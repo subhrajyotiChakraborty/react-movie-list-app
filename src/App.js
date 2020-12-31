@@ -23,6 +23,7 @@ class App extends Component {
 
     this.state = {
       searchWord: "",
+      pageCount: 1,
     };
   }
 
@@ -34,14 +35,35 @@ class App extends Component {
   handleSearch = (searchKeyword) => {
     this.setState({
       searchWord: searchKeyword,
+      pageCount: 1,
     });
     if (searchKeyword && searchKeyword.trim().length) {
-      this.props.fetchMovies(searchKeyword.trim());
+      this.props.fetchMovies(searchKeyword.trim(), 1);
     }
   };
 
   handleResetList = () => {
     this.props.fetchMovies();
+  };
+
+  handlePageCount = () => {
+    this.setState(
+      (prevState) => {
+        return {
+          ...prevState,
+          pageCount: prevState.pageCount + 1,
+        };
+      },
+      () => this.loadMoreMovies()
+    );
+  };
+
+  loadMoreMovies = () => {
+    console.log(this.state.pageCount);
+    this.props.loadMoreMovies(
+      this.state.searchWord.trim() || "Jurassic",
+      this.state.pageCount
+    );
   };
 
   render() {
@@ -61,6 +83,8 @@ class App extends Component {
             favHandler={this.props.favHandler}
             favMovies={this.props.favMovies}
             removeFavMovieHandler={this.props.removeFavMovieHandler}
+            pageCountHandler={this.handlePageCount}
+            showLoadMore={this.props.showLoadMore}
           />
         </MovieContext.Provider>
       </div>
@@ -73,13 +97,16 @@ const mapStateToProps = (state) => {
     movies: state.movies.movies,
     favMovies: state.movies.favMovies,
     loading: state.movies.loading,
+    showLoadMore: state.movies.isLoadMore,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchMovies: (searchKeyword) =>
-      dispatch(actions.fetchMovies(searchKeyword)),
+    fetchMovies: (searchKeyword, pageCount) =>
+      dispatch(actions.fetchMovies(searchKeyword, pageCount)),
+    loadMoreMovies: (searchKeyword, pageCount) =>
+      dispatch(actions.loadMoreMovies(searchKeyword, pageCount)),
     fetchFavMovies: () => dispatch(actions.fetchFavMovieList()),
     favHandler: (movie) => dispatch(actions.saveFavMovie(movie)),
     removeFavMovieHandler: (imdbID) => dispatch(actions.removeFavMovie(imdbID)),

@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   movies: [],
   message: "",
   favMovies: [],
+  isLoadMore: false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -26,13 +27,54 @@ const reducer = (state = INITIAL_STATE, action) => {
         msg: action.payload,
       };
 
+    case actionTypes.LOAD_MORE_MOVIES_FAIL:
+      return {
+        ...state,
+        isLoadMore: false,
+        loading: false,
+        error: false,
+      };
+
     case actionTypes.FETCH_MOVIES_SUCCESS:
+      if (action.payload.loadMore) {
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          isLoadMore: true,
+          msg: "",
+          movies: action.payload.Search,
+        };
+      }
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        isLoadMore: false,
+        msg: "",
+        movies: action.payload.Search,
+      };
+
+    case actionTypes.LOAD_MORE_MOVIES_SUCCESS:
+      if (
+        [...state.movies, ...action.payload.Search].length ===
+        Number(action.payload.totalResults)
+      ) {
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          isLoadMore: false,
+          msg: "",
+          movies: [...state.movies, ...action.payload.Search],
+        };
+      }
       return {
         ...state,
         loading: false,
         error: false,
         msg: "",
-        movies: action.payload,
+        movies: [...state.movies, ...action.payload.Search],
       };
 
     case actionTypes.SAVE_FAV_MOVIE_LIST:
