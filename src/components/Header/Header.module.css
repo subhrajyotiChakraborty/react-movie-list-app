@@ -1,26 +1,16 @@
 .header {
-  position: sticky;
-  top: 0;
-  display: inline-block;
-  width: 100%;
+  position: relative;
   border-bottom: 1px solid #fff;
   margin-bottom: 20px;
-  z-index: 5;
-  background-color: black;
 }
 
 .headerAppName {
-  padding-left: 20px;
   cursor: pointer;
 }
 
 .searchInput {
   position: absolute;
-  top: 11px;
-  right: 55px;
-  font-size: 17px;
-  border-radius: 10px;
-  padding: 10px;
+  right: 10px;
 }
 :focus {
   outline: none;

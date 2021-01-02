@@ -13,6 +13,7 @@ const MainPage = ({
   removeFavMovieHandler,
   pageCountHandler,
   showLoadMore,
+  handleModalOpen,
 }) => {
   return (
     <React.Fragment>
@@ -28,6 +29,7 @@ const MainPage = ({
                   <Card
                     movieTitle={Title}
                     moviePoster={Poster}
+                    handleModalOpen={handleModalOpen}
                     favHandler={() =>
                       favHandler({
                         Title,

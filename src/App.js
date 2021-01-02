@@ -7,6 +7,7 @@ import MainPage from "./screens/MainPage";
 import * as classes from "./App.module.css";
 import * as actions from "./store/actions";
 import MovieContext from "./context/movie";
+import CustomModal from "./components/Modal/Modal";
 
 TopBarProgress.config({
   barColors: {
@@ -24,6 +25,7 @@ class App extends Component {
     this.state = {
       searchWord: "",
       pageCount: 1,
+      showModal: false,
     };
   }
 
@@ -66,10 +68,22 @@ class App extends Component {
     );
   };
 
+  handleModalToggle = () => {
+    this.setState((prevState) => {
+      return {
+        showModal: !prevState.showModal,
+      };
+    });
+  };
+
   render() {
     return (
       <div className={classes.appContainer}>
         <ToastContainer />
+        <CustomModal
+          show={this.state.showModal}
+          handleClose={this.handleModalToggle}
+        />
         {this.props.loading && <TopBarProgress />}
         <MovieContext.Provider
           value={{
@@ -85,6 +99,7 @@ class App extends Component {
             removeFavMovieHandler={this.props.removeFavMovieHandler}
             pageCountHandler={this.handlePageCount}
             showLoadMore={this.props.showLoadMore}
+            handleModalOpen={this.handleModalToggle}
           />
         </MovieContext.Provider>
       </div>
