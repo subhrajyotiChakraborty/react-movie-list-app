@@ -68,7 +68,11 @@ class App extends Component {
     );
   };
 
-  handleModalToggle = () => {
+  handleModalToggle = (movieID) => {
+    console.log(movieID);
+    if (movieID && movieID.length) {
+      this.props.fetchMovieDetails(movieID);
+    }
     this.setState((prevState) => {
       return {
         showModal: !prevState.showModal,
@@ -80,10 +84,14 @@ class App extends Component {
     return (
       <div className={classes.appContainer}>
         <ToastContainer />
-        <CustomModal
-          show={this.state.showModal}
-          handleClose={this.handleModalToggle}
-        />
+        {this.props.selectedMovieData ? (
+          <CustomModal
+            show={this.state.showModal}
+            handleClose={this.handleModalToggle}
+            {...this.props.selectedMovieData}
+          />
+        ) : null}
+
         {this.props.loading && <TopBarProgress />}
         <MovieContext.Provider
           value={{
@@ -113,6 +121,7 @@ const mapStateToProps = (state) => {
     favMovies: state.movies.favMovies,
     loading: state.movies.loading,
     showLoadMore: state.movies.isLoadMore,
+    selectedMovieData: state.movies.selectedMovieData,
   };
 };
 
@@ -125,6 +134,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchFavMovies: () => dispatch(actions.fetchFavMovieList()),
     favHandler: (movie) => dispatch(actions.saveFavMovie(movie)),
     removeFavMovieHandler: (imdbID) => dispatch(actions.removeFavMovie(imdbID)),
+    fetchMovieDetails: (imdbID) => dispatch(actions.fetchMovieDetails(imdbID)),
   };
 };
 

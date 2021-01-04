@@ -166,3 +166,30 @@ export const removeFavMovieError = () => {
     type: actionTypes.REMOVE_FAV_MOVIE_ERROR,
   };
 };
+
+export const fetchMovieDetails = (movieId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(fetchMoviesStart());
+      const response = await axios.get(`movie/${movieId}`);
+      console.log(response.data);
+      dispatch(fetchMovieDetailsSuccess(response.data));
+    } catch (error) {
+      console.log(error);
+      dispatch(fetchMovieDetailsError());
+    }
+  };
+};
+
+export const fetchMovieDetailsSuccess = (movieDetailsData) => {
+  return {
+    type: actionTypes.FETCH_MOVIE_DETAILS_SUCCESS,
+    payload: movieDetailsData,
+  };
+};
+
+export const fetchMovieDetailsError = () => {
+  return {
+    type: actionTypes.FETCH_MOVIE_DETAILS_ERROR,
+  };
+};

@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   message: "",
   favMovies: [],
   isLoadMore: false,
+  selectedMovieData: null,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -32,7 +33,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoadMore: false,
         loading: false,
-        error: false,
+        error: false, // temporary
       };
 
     case actionTypes.FETCH_MOVIES_SUCCESS:
@@ -111,6 +112,21 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
+      };
+
+    case actionTypes.FETCH_MOVIE_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        selectedMovieData: action.payload,
+      };
+
+    case actionTypes.FETCH_MOVIE_DETAILS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: false, // temporary
       };
 
     default:

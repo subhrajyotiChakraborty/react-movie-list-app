@@ -29,7 +29,7 @@ const MainPage = ({
                   <Card
                     movieTitle={Title}
                     moviePoster={Poster}
-                    handleModalOpen={handleModalOpen}
+                    handleModalOpen={() => handleModalOpen(imdbID)}
                     favHandler={() =>
                       favHandler({
                         Title,
@@ -68,6 +68,7 @@ const MainPage = ({
                           movieTitle={Title}
                           moviePoster={Poster}
                           isFav={isFav}
+                          handleModalOpen={() => handleModalOpen(imdbID)}
                           removeFromFav={() => removeFavMovieHandler(imdbID)}
                         />
                       </Fragment>
