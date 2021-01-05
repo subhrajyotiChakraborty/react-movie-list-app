@@ -45,7 +45,12 @@ class App extends Component {
   };
 
   handleResetList = () => {
-    this.props.fetchMovies();
+    this.setState(
+      {
+        searchWord: "",
+      },
+      () => this.props.fetchMovies()
+    );
   };
 
   handlePageCount = () => {

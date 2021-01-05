@@ -17,6 +17,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case actionTypes.REMOVE_FAV_MOVIE_START:
       return {
         ...state,
+        selectedMovieData: null,
         loading: true,
       };
 
