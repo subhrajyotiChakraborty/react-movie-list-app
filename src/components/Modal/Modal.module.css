@@ -1,0 +1,19 @@
+.moviePoster {
+  height: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.moviePlotWrapper {
+  align-self: center;
+}
+
+.ratingsSection {
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 5px;
+}
+.movieRatings {
+  font-size: 14px;
+}
