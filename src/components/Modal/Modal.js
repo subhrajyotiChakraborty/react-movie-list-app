@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Row, Col } from "react-bootstrap";
+import { Modal, Row, Col } from "react-bootstrap";
 
 import * as classes from "./Modal.module.css";
 import default_image from "../../assets/media/images/default_image.png";
@@ -42,12 +42,6 @@ const CustomModal = ({ show, handleClose, ...props }) => {
           </Row>
         </div>
       </Modal.Body>
-      {/* <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant="primary">Understood</Button>
-      </Modal.Footer> */}
     </Modal>
   );
 };
