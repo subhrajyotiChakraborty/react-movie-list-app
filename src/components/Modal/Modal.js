@@ -29,12 +29,12 @@ const CustomModal = ({ show, handleClose, ...props }) => {
             </Col>
           </Row>
         </div>
-        <div className={classes.ratingsSection}>
+        <div className={classes.sectionSeparator}>
           <Row>
             {props.Ratings.map(({ Source, Value }) => {
               return (
                 <Col key={Source}>
-                  <p className={classes.sectionSeparator}>
+                  <p>
                     {Source}: {Value}
                   </p>
                 </Col>
@@ -42,16 +42,14 @@ const CustomModal = ({ show, handleClose, ...props }) => {
             })}
           </Row>
         </div>
-        <div className={classes.sectionSeparator}>
-          <Row>
-            {props.Actors.split(", ").map((actor) => {
-              return (
-                <Col key={actor}>
-                  <Person name={actor} />
-                </Col>
-              );
-            })}
-          </Row>
+        <div
+          className={[classes.sectionSeparator, classes.personsContainer].join(
+            " "
+          )}
+        >
+          {props.Actors.split(", ").map((actor) => {
+            return <Person key={actor} name={actor} />;
+          })}
         </div>
       </Modal.Body>
     </Modal>

@@ -17,3 +17,7 @@
 .movieRatings {
   font-size: 14px;
 }
+.personsContainer {
+  display: flex;
+  overflow-x: scroll;
+}

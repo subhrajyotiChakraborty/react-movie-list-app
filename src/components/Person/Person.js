@@ -1,6 +1,5 @@
 import React from "react";
 import Avatar from "react-avatar";
-import { NavItem } from "react-bootstrap";
 
 import * as classes from "./Person.module.css";
 
