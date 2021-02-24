@@ -3,6 +3,7 @@ import { Modal, Button, Row, Col } from "react-bootstrap";
 
 import * as classes from "./Modal.module.css";
 import default_image from "../../assets/media/images/default_image.png";
+import Person from "../Person/Person";
 
 const CustomModal = ({ show, handleClose, ...props }) => {
   return (
@@ -33,9 +34,20 @@ const CustomModal = ({ show, handleClose, ...props }) => {
             {props.Ratings.map(({ Source, Value }) => {
               return (
                 <Col key={Source}>
-                  <p className={classes.movieRatings}>
+                  <p className={classes.sectionSeparator}>
                     {Source}: {Value}
                   </p>
+                </Col>
+              );
+            })}
+          </Row>
+        </div>
+        <div className={classes.sectionSeparator}>
+          <Row>
+            {props.Actors.split(", ").map((actor) => {
+              return (
+                <Col key={actor}>
+                  <Person name={actor} />
                 </Col>
               );
             })}

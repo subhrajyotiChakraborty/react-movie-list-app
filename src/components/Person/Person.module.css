@@ -1,0 +1,9 @@
+.personWrapper {
+  width: fit-content;
+}
+.avatarStyle {
+  text-align: center;
+}
+.nameStyle {
+  font-size: 12px;
+}
